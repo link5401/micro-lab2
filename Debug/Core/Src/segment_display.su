@@ -1,0 +1,2 @@
+segment_display.c:26:9:update_value_segment	16	static
+segment_display.c:34:6:display_segment_number	24	static

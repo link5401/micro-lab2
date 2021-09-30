@@ -23,6 +23,8 @@ static uint8_t sevenSegmentLEDConversion[NUMBER_OF_DECIMAL_DIGITS] = {0x3f, 0x6,
 //Buffer variable
 static uint8_t segmentBuffer[NUMBER_OF_SEVEN_SEGMENTS];
 
+
+
 uint8_t update_value_segment(uint8_t value, int idx)
 {
 	 if(idx >= NUMBER_OF_SEVEN_SEGMENTS) return 0;
@@ -78,4 +80,50 @@ void display_segment_number(int idx){
 	}
 
 
+}
+
+int index_led = 0;
+int led_buffer[4] = {1, 2, 3, 4};
+
+void update7SEG(int index){
+	switch(index){
+		case 0:
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+			update_value_segment(led_buffer[index], index);
+			display_segment_number(index);
+			index_led = index;
+			break;
+		case 1:
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+			update_value_segment(led_buffer[index], index);
+			display_segment_number(index);
+			index_led = index;
+			break;
+		case 2:
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 0);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+			update_value_segment(led_buffer[index], index);
+			display_segment_number(index);
+			index_led = index;
+			break;
+		case 3:
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
+			update_value_segment(led_buffer[index], index);
+			display_segment_number(index);
+			index_led = index;
+			break;
+		default:
+			break;
+	}
 }

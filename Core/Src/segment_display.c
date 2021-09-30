@@ -10,7 +10,7 @@
 
 //Maximum number of digits
 #define NUMBER_OF_DECIMAL_DIGITS 	10
-#define NUMBER_OF_SEVEN_SEGMENTS	2
+#define NUMBER_OF_SEVEN_SEGMENTS	4
 
 /*LED CONVERSION
  * A is least significant bit

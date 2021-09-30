@@ -21,10 +21,11 @@ static uint8_t sevenSegmentLEDConversion[NUMBER_OF_DECIMAL_DIGITS] = {0x3f, 0x6,
 // Seven segments LEDs
 
 //Buffer variable
+//ACTUAL ARRAY FOR DISPLAYING
 static uint8_t segmentBuffer[NUMBER_OF_SEVEN_SEGMENTS];
 
 
-
+//update segmentBuffer
 uint8_t update_value_segment(uint8_t value, int idx)
 {
 	 if(idx >= NUMBER_OF_SEVEN_SEGMENTS) return 0;
@@ -33,6 +34,7 @@ uint8_t update_value_segment(uint8_t value, int idx)
 	 return 1;
 }
 
+//get signals from segmentbuffer then writepin accordingly
 void display_segment_number(int idx){
 	uint8_t temp = sevenSegmentLEDConversion[segmentBuffer[idx]];
 	//AND WITH EACH BIT IN 7 STARTING BITS
@@ -82,9 +84,12 @@ void display_segment_number(int idx){
 
 }
 
-int index_led = 0;
-int led_buffer[4] = {1, 2, 3, 4};
 
+//ARRAY FOR VALUES OF 4 LED
+//THIS IS NOT THE ARRAY FOR DISPLAYING.
+int led_buffer[4] = {1, 2, 3, 4};
+int index_led = 0;
+//update led_index and EN signals
 void update7SEG(int index){
 	switch(index){
 		case 0:
@@ -126,4 +131,24 @@ void update7SEG(int index){
 		default:
 			break;
 	}
+}
+
+//update led_buffer
+void updateClockBuffer(int hour, int minute){
+	if(hour < 10){
+		led_buffer[0]  = 0;
+		led_buffer[1]  = hour;
+	} else{
+		led_buffer[0]  = hour/10;
+		led_buffer[1]  = hour%10;
+	}
+	if(minute < 10){
+		led_buffer[2]  = 0;
+		led_buffer[3]  = minute;
+
+	} else {
+		led_buffer[2]  = minute/10;
+		led_buffer[3]  = minute%10;
+	}
+
 }

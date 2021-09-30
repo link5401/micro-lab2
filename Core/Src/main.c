@@ -232,14 +232,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 50;
+int counter = 25;
 int index = 0;
+int controlDOT = 0;
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim ){
 	counter--;
 	if(index > 3) index = 0;
-	if(counter <= 0){
+	if(counter < 0){
+		counter = 25;
 		update7SEG(index++);
-		counter = 50;
+		if(controlDOT == 3){
+			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+			controlDOT = 0;
+		} else {controlDOT++;}
 	}
 }
 /* USER CODE END 4 */

@@ -134,7 +134,8 @@ void update7SEG(int index){
 }
 
 //update led_buffer
-void updateClockBuffer(int hour, int minute){
+void updateClockBuffer(int hour, int minute,int delay){
+	int delayForEachSeg = delay/NUMBER_OF_SEVEN_SEGMENTS;
 	if(hour < 10){
 		led_buffer[0]  = 0;
 		led_buffer[1]  = hour;
@@ -149,6 +150,10 @@ void updateClockBuffer(int hour, int minute){
 	} else {
 		led_buffer[2]  = minute/10;
 		led_buffer[3]  = minute%10;
+	}
+	for(int i = 0; i < NUMBER_OF_SEVEN_SEGMENTS; i++){
+		update7SEG(i);
+		HAL_Delay(delayForEachSeg);
 	}
 
 }

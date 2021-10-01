@@ -1,4 +1,4 @@
 segment_display.c:29:9:update_value_segment	16	static
 segment_display.c:38:6:display_segment_number	24	static
 segment_display.c:93:6:update7SEG	16	static
-segment_display.c:137:6:updateClockBuffer	16	static
+segment_display.c:137:6:updateClockBuffer	32	static

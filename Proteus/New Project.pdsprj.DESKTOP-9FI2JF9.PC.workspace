@@ -333,7 +333,7 @@
      <ITEM name="TopLineAddress">E000E000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1906" x="6" flags="0000802b" y="127" h="733" pid="100" iid="1">
+   <POPUP w="1906" x="6" flags="0000002b" y="127" h="733" pid="100" iid="1">
     <PROPERTIES>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
@@ -371,6 +371,9 @@
     <PROPERTIES/>
    </POPUP>
    <POPUP w="695" x="778" flags="00000001" y="587" h="453" pid="0" iid="9">
+    <PROPERTIES/>
+   </POPUP>
+   <POPUP w="695" x="217" flags="00000000" y="171" h="453" pid="0" iid="17">
     <PROPERTIES/>
    </POPUP>
   </PWI>

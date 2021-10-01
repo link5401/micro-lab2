@@ -40,6 +40,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 
@@ -48,13 +49,26 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int timer2_counter = 0;
+ int timer2_flag = 0;
+ int TIMER_CYCLE = 10;
+ void setTimer2(int duration){
+ 	timer2_counter = duration / TIMER_CYCLE;
+ 	timer2_flag = 0;
+ }
+ void timer_run(){
+ 	if(timer2_counter > 0){
+ 		timer2_counter --;
+ 		if(timer2_counter == 0) timer2_flag = 1;
+ 	}
+ }
 /* USER CODE END 0 */
 
 /**
@@ -85,8 +99,10 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-//  HAL_TIM_Base_Start_IT(&htim2) ;
+  HAL_TIM_Base_Start_IT(&htim2) ;
+
 
 
 
@@ -95,9 +111,14 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
  int hour = 15, minute = 8, second = 50;
+ setTimer2(10);
   while (1)
   {
     /* USER CODE END WHILE */
+	  if(timer2_flag == 1){
+		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		  setTimer2(2000);
+	  }
 	  second++;
 	  if(second >= 60){
 		  second = 0;
@@ -107,17 +128,18 @@ int main(void)
 		  minute = 0;
 		  hour++;
 	  }
-	  if(hour >= 24) {
+	  if(hour >= 24){
 		  hour = 0;
 	  }
-	  updateClockBuffer(hour, minute);
+	  updateClockBuffer();
 	  HAL_Delay(1000);
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	timer_run();
+}
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -151,6 +173,51 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 7999;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 10 - 1;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
 }
 
 /**
@@ -195,21 +262,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-//int counter = 25;
-//int index = 0;
-//int controlDOT = 0;
-//void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim ){
-//	counter--;
-//	if(index > 3) index = 0;
-//	if(counter < 0){
-//		counter = 25;
-//		update7SEG(index++);
-//		if(controlDOT == 3){
-//			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-//			controlDOT = 0;
-//		} else {controlDOT++;}
-//	}
-//}
+
 /* USER CODE END 4 */
 
 /**

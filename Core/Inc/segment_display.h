@@ -14,5 +14,5 @@
 uint8_t update_value_segment(uint8_t value, int idx);
 void display_segment_number(int idx);
 void update7SEG(int index);
-void updateClockBuffer(int hour, int minute);
+void updateClockBuffer(int hour, int minute, int delay);
 #endif /* INC_SEGMENT_DISPLAY_H_ */

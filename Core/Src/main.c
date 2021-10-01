@@ -95,6 +95,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
  int hour = 15, minute = 8, second = 50;
+ int oneSecondEqualsTo = 1000;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -110,8 +111,8 @@ int main(void)
 	  if(hour >= 24) {
 		  hour = 0;
 	  }
-	  updateClockBuffer(hour, minute);
-	  HAL_Delay(1000);
+	  updateClockBuffer(hour, minute, oneSecondEqualsTo);
+
 
     /* USER CODE BEGIN 3 */
   }

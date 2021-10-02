@@ -1,0 +1,2 @@
+matrix_display.c:15:6:displayLEDMatrix	24	static
+matrix_display.c:43:6:updateLEDMatrix	16	static

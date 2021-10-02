@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/main.c \
+../Core/Src/matrix_display.c \
 ../Core/Src/segment_display.c \
 ../Core/Src/stm32f1xx_hal_msp.c \
 ../Core/Src/stm32f1xx_it.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 
 OBJS += \
 ./Core/Src/main.o \
+./Core/Src/matrix_display.o \
 ./Core/Src/segment_display.o \
 ./Core/Src/stm32f1xx_hal_msp.o \
 ./Core/Src/stm32f1xx_it.o \
@@ -24,6 +26,7 @@ OBJS += \
 
 C_DEPS += \
 ./Core/Src/main.d \
+./Core/Src/matrix_display.d \
 ./Core/Src/segment_display.d \
 ./Core/Src/stm32f1xx_hal_msp.d \
 ./Core/Src/stm32f1xx_it.d \

@@ -116,38 +116,46 @@ int main(void)
    {
     /* USER CODE END WHILE */
 	   if(timer2_flag == 1){
-	   			  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	   			  second++;
-	   			  setTimer2(1000);
-	   	  }
+	  	   			  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	  	   			  second++;
+	  	   			  setTimer2(1000);
+	  	   	  }
 
-	   	  if(second >= 60){
-	   		  second = 0;
-	   		  minute++;
-	   	  }
-	   	  if(minute >= 60){
-	   		  minute = 0;
-	   		  hour++;
-	   	  }
-	   	  if(hour >= 24){
-	   		  hour = 0;
-	   	  }
-	   	  updateClockBuffer(hour, minute);
-	   	  if(timer2_counter > 75) {
-	   		  update7SEG(0);
+	  	   	  if(second >= 60){
+	  	   		  second = 0;
+	  	   		  minute++;
+	  	   	  }
+	  	   	  if(minute >= 60){
+	  	   		  minute = 0;
+	  	   		  hour++;
+	  	   	  }
+	  	   	  if(hour >= 24){
+	  	   		  hour = 0;
+	  	   	  }
+	  	   	  updateClockBuffer(hour, minute);
 
-	   	  }
-	   	  else if(timer2_counter > 50){
-	   		  update7SEG(1);
-	   	  }
-	   	  else if(timer2_counter > 25) {
-	   		  update7SEG(2);
-	   	  }
-	   	  else if(timer2_counter > 0) {
-	   		  update7SEG(3);
+	  	   	  if(timer2_counter > 75) {
+	  	   		  update7SEG(0);
 
-	   	  }
+	  	   	  }
+	  	   	  else if(timer2_counter > 50){
+	  	   		  update7SEG(1);
+	  	   	  }
+	  	   	  else if(timer2_counter > 25) {
+	  	   		  update7SEG(2);
+	  	   	  }
+	  	   	  else if(timer2_counter > 0) {
+	  	   		  update7SEG(3);
 
+	  	   	  }
+	  	   	  if(timer2_counter % 8 == 0) updateLEDMatrix(0);
+	  	   	  if(timer2_counter % 8 == 7) updateLEDMatrix(1);
+	  	   	  if(timer2_counter % 8 == 6) updateLEDMatrix(2);
+	  	   	  if(timer2_counter % 8 == 5) updateLEDMatrix(3);
+	  	   	  if(timer2_counter % 8 == 4) updateLEDMatrix(4);
+	  	   	  if(timer2_counter % 8 == 3) updateLEDMatrix(5);
+	  	   	  if(timer2_counter % 8 == 2) updateLEDMatrix(6);
+	  	   	  if(timer2_counter % 8 == 1) updateLEDMatrix(7);
 
 
 
@@ -214,7 +222,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 7999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 10 - 1;
+  htim2.Init.Period = 9;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)

@@ -110,49 +110,52 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   int hour = 15, minute = 8, second = 50;
-
+//
   setTimer2(1000);
    while (1)
    {
     /* USER CODE END WHILE */
 	   if(timer2_flag == 1){
-	    HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	   	second++;
-	   	setTimer2(1000);
-	   	}
-	   	  	   	  if(second >= 60){
-	   	  	   		  second = 0;
-	   	  	   		  minute++;
-	   	  	   	  }
-	   	  	   	  if(minute >= 60){
-	   	  	   		  minute = 0;
-	   	  	   		  hour++;
-	   	  	   	  }
-	   	  	   	  if(hour >= 24){
-	   	  	   		  hour = 0;
-	   	  	   	  }
-	   	  	   	  updateClockBuffer(hour, minute);
+		   	    HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		   	   	second++;
+		   	   	setTimer2(1000);
+		   	   	}
+		   	   	  	   	  if(second >= 60){
+		   	   	  	   		  second = 0;
+		   	   	  	   		  minute++;
+		   	   	  	   	  }
+		   	   	  	   	  if(minute >= 60){
+		   	   	  	   		  minute = 0;
+		   	   	  	   		  hour++;
+		   	   	  	   	  }
+		   	   	  	   	  if(hour >= 24){
+		   	   	  	   		  hour = 0;
+		   	   	  	   	  }
+		   	   	  	   	  updateClockBuffer(hour, minute);
 
-	   	  	   	  if(timer2_counter > 75) {
-	   	  	   		  update7SEG(0);
+		   	   	  	   	  if(timer2_counter > 75) {
+		   	   	  	   		  update7SEG(0);
 
-	   	  	   	  }
-	   	  	   	  else if(timer2_counter > 50){
-	   	  	   		  update7SEG(1);
-	   	  	   	  }
-	   	  	   	  else if(timer2_counter > 25) {
-	   	  	   		  update7SEG(2);
-	   	  	   	  }
-	   	  	   	  else if(timer2_counter > 0) {
-	   	  	   		  update7SEG(3);
+		   	   	  	   	  }
+		   	   	  	   	  else if(timer2_counter > 50){
+		   	   	  	   		  update7SEG(1);
+		   	   	  	   	  }
+		   	   	  	   	  else if(timer2_counter > 25) {
+		   	   	  	   		  update7SEG(2);
+		   	   	  	   	  }
+		   	   	  	   	  else if(timer2_counter > 0) {
+		   	   	  	   		  update7SEG(3);
 
-	   	  	   	  }
+		   	   	  	   	  }
 
-	   	  	for(int i = 0; i < 8; i++){
-	   	  		clearAllMatrix();
-	   	  		updateLEDMatrix(i);
-	   	  		HAL_Delay(1);
-	   	  	}
+		   	   	  	for(int i = 1; i < 8; i++){
+
+		   	   	  	 clearAllMatrix();
+		   	   	  	 updateLEDMatrix(i);
+		   	   	  	 HAL_Delay(1);
+
+
+		   	   	  	}
 
     /* USER CODE BEGIN 3 */
    }

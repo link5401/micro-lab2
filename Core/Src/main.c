@@ -116,48 +116,43 @@ int main(void)
    {
     /* USER CODE END WHILE */
 	   if(timer2_flag == 1){
-	  	   			  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	  	   			  second++;
-	  	   			  setTimer2(1000);
-	  	   	  }
+	    HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	   	second++;
+	   	setTimer2(1000);
+	   	}
+	   	  	   	  if(second >= 60){
+	   	  	   		  second = 0;
+	   	  	   		  minute++;
+	   	  	   	  }
+	   	  	   	  if(minute >= 60){
+	   	  	   		  minute = 0;
+	   	  	   		  hour++;
+	   	  	   	  }
+	   	  	   	  if(hour >= 24){
+	   	  	   		  hour = 0;
+	   	  	   	  }
+	   	  	   	  updateClockBuffer(hour, minute);
 
-	  	   	  if(second >= 60){
-	  	   		  second = 0;
-	  	   		  minute++;
-	  	   	  }
-	  	   	  if(minute >= 60){
-	  	   		  minute = 0;
-	  	   		  hour++;
-	  	   	  }
-	  	   	  if(hour >= 24){
-	  	   		  hour = 0;
-	  	   	  }
-	  	   	  updateClockBuffer(hour, minute);
+	   	  	   	  if(timer2_counter > 75) {
+	   	  	   		  update7SEG(0);
 
-	  	   	  if(timer2_counter > 75) {
-	  	   		  update7SEG(0);
+	   	  	   	  }
+	   	  	   	  else if(timer2_counter > 50){
+	   	  	   		  update7SEG(1);
+	   	  	   	  }
+	   	  	   	  else if(timer2_counter > 25) {
+	   	  	   		  update7SEG(2);
+	   	  	   	  }
+	   	  	   	  else if(timer2_counter > 0) {
+	   	  	   		  update7SEG(3);
 
-	  	   	  }
-	  	   	  else if(timer2_counter > 50){
-	  	   		  update7SEG(1);
-	  	   	  }
-	  	   	  else if(timer2_counter > 25) {
-	  	   		  update7SEG(2);
-	  	   	  }
-	  	   	  else if(timer2_counter > 0) {
-	  	   		  update7SEG(3);
+	   	  	   	  }
 
-	  	   	  }
-	  	   	  if(timer2_counter % 8 == 0) updateLEDMatrix(0);
-	  	   	  if(timer2_counter % 8 == 7) updateLEDMatrix(1);
-	  	   	  if(timer2_counter % 8 == 6) updateLEDMatrix(2);
-	  	   	  if(timer2_counter % 8 == 5) updateLEDMatrix(3);
-	  	   	  if(timer2_counter % 8 == 4) updateLEDMatrix(4);
-	  	   	  if(timer2_counter % 8 == 3) updateLEDMatrix(5);
-	  	   	  if(timer2_counter % 8 == 2) updateLEDMatrix(6);
-	  	   	  if(timer2_counter % 8 == 1) updateLEDMatrix(7);
-
-
+	   	  	for(int i = 0; i < 8; i++){
+	   	  		clearAllMatrix();
+	   	  		updateLEDMatrix(i);
+	   	  		HAL_Delay(1);
+	   	  	}
 
     /* USER CODE BEGIN 3 */
    }
@@ -300,21 +295,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-//int counter = 25;
-//int index = 0;
-//int controlDOT = 0;
-//void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim ){
-//	counter--;
-//	if(index > 3) index = 0;
-//	if(counter < 0){
-//		counter = 25;
-//		update7SEG(index++);
-//		if(controlDOT == 3){
-//			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-//			controlDOT = 0;
-//		} else {controlDOT++;}
-//	}
-//}
+
 /* USER CODE END 4 */
 
 /**

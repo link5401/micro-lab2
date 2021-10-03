@@ -92,3 +92,10 @@ void clearAllMatrix(void ){
 	HAL_GPIO_WritePin(COL6_GPIO_Port, COL6_Pin, 0);
 	HAL_GPIO_WritePin(COL7_GPIO_Port, COL7_Pin, 0);
 }
+void matrixAnimation(void){
+	//circular shifting for each row
+	int bitToShift = 1;
+	for(int i = 0; i< MAX_LED_MATRIX; i++){
+		matrix_buffer[i] = (matrix_buffer[i] >> bitToShift) | (matrix_buffer[i] << (MAX_LED_MATRIX - bitToShift));
+	}
+}

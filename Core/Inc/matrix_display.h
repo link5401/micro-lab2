@@ -11,4 +11,5 @@
 void updateLEDMatrix(int index);
 void displayLEDMatrix(int index);
 void clearAllMatrix(void );
+void matrixAnimation(void );
 #endif /* INC_MATRIX_DISPLAY_H_ */

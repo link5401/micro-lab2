@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "matrix_display.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -156,6 +156,7 @@ int main(void)
 
 
 		   	   	  	}
+		   	   	matrixAnimation();
 
     /* USER CODE BEGIN 3 */
    }

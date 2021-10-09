@@ -154,3 +154,34 @@ void updateClockBuffer(int hour, int minute){
 
 
 }
+//update second, minute,hour
+//based on timer2_counter, display the appropriate 7SEGs, 250ms for each 7SEG
+void displayClock(int hour, int minute, int second, int timer2_counter){
+  	   	  if(second >= 60){
+  	   		  second = 0;
+  	   		  minute++;
+  	   	  }
+  	   	  if(minute >= 60){
+  	   		  minute = 0;
+  	   		  hour++;
+  	   	  }
+  	   	  if(hour >= 24){
+  	   		  hour = 0;
+  	   	  }
+  	   	  updateClockBuffer(hour, minute);
+
+  	   	  if(timer2_counter > 75) {
+  	   		  update7SEG(0);
+
+  	   	  }
+  	   	  else if(timer2_counter > 50){
+  	   		  update7SEG(1);
+  	   	  }
+  	   	  else if(timer2_counter > 25) {
+  	   		  update7SEG(2);
+  	   	  }
+  	   	  else if(timer2_counter > 0) {
+  	   		  update7SEG(3);
+
+  	   	  }
+}

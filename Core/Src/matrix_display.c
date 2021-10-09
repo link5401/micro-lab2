@@ -6,13 +6,11 @@
  */
 #include "main.h"
 #include "matrix_display.h"
-const int MAX_LED_MATRIX = 8;
-uint8_t matrix_buffer[8] = {0x00,0x18,0x24,0x42,0x42,0x42,0x7e,0x42};
-int led_matrix_index = 0;
 
 
 
-void displayLEDMatrix(int index){
+//ENBLE BIT ON ROW BASED ON matrix_buffer[]
+void bitCheckOnRow(int index){
 	uint8_t temp = matrix_buffer[index];
 	//col7
 	if (temp & 0x01) HAL_GPIO_WritePin(COL7_GPIO_Port, COL7_Pin, 1);
@@ -40,11 +38,11 @@ void displayLEDMatrix(int index){
 	else HAL_GPIO_WritePin(COL0_GPIO_Port, COL0_Pin, 0);
 
 }
+//CONTROLLING ENM0->ENM7
 void updateLEDMatrix(int index){
 	switch(index){
 		case 0:
 			HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, 1);
-
 			break;
 		case 1:
 			HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, 1);
@@ -70,9 +68,10 @@ void updateLEDMatrix(int index){
 		default:
 			break;
 	}
-	displayLEDMatrix(index);
+	bitCheckOnRow(index);
 
 }
+//turn off all signals of MATRIX
 void clearAllMatrix(void ){
 	HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, 0);
 	HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, 0);
@@ -92,6 +91,15 @@ void clearAllMatrix(void ){
 	HAL_GPIO_WritePin(COL6_GPIO_Port, COL6_Pin, 0);
 	HAL_GPIO_WritePin(COL7_GPIO_Port, COL7_Pin, 0);
 }
+//DISPLAY LED
+void displayLEDMatrix(void ){
+	for(int i = 1; i < 8; i++){
+		clearAllMatrix();
+		updateLEDMatrix(i);
+		HAL_Delay(1);
+	}
+}
+//USE CIRCULAR SHIFTING TO MAKE ANIMATION POSSIBLE
 void matrixAnimation(void){
 	//circular shifting for each row
 	int bitToShift = 1;

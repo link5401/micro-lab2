@@ -93,7 +93,7 @@ void clearAllMatrix(void ){
 }
 //DISPLAY LED
 void displayLEDMatrix(void ){
-	for(int i = 1; i < 8; i++){
+	for(int i = 1; i <  MAX_LED_MATRIX; i++){
 		clearAllMatrix();
 		updateLEDMatrix(i);
 		HAL_Delay(1);

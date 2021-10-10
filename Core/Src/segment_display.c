@@ -135,7 +135,7 @@ void update7SEG(int index){
 
 //update led_buffer
 void updateClockBuffer(int hour, int minute){
-
+	//havent found a better way to improve % and /
 	if(hour < 10){
 		led_buffer[0]  = 0;
 		led_buffer[1]  = hour;
@@ -156,23 +156,11 @@ void updateClockBuffer(int hour, int minute){
 }
 //update second, minute,hour
 //based on timer2_counter, display the appropriate 7SEGs, 250ms for each 7SEG
-void displayClock(int hour, int minute, int second, int timer2_counter){
-  	   	  if(second >= 60){
-  	   		  second = 0;
-  	   		  minute++;
-  	   	  }
-  	   	  if(minute >= 60){
-  	   		  minute = 0;
-  	   		  hour++;
-  	   	  }
-  	   	  if(hour >= 24){
-  	   		  hour = 0;
-  	   	  }
-  	   	  updateClockBuffer(hour, minute);
+void displayClock(int timer2_counter){
 
+  	   	  //each 7SEG is ON for 250ms
   	   	  if(timer2_counter > 75) {
   	   		  update7SEG(0);
-
   	   	  }
   	   	  else if(timer2_counter > 50){
   	   		  update7SEG(1);
@@ -182,6 +170,5 @@ void displayClock(int hour, int minute, int second, int timer2_counter){
   	   	  }
   	   	  else if(timer2_counter > 0) {
   	   		  update7SEG(3);
-
   	   	  }
 }

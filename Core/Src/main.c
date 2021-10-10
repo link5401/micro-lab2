@@ -109,7 +109,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int hour = 15, minute = 8, second = 50;
+  int hour = 15, minute = 9, second = 50;
   const int delayTimer = 1000;
   setTimer2(delayTimer);
    while (1)
@@ -120,10 +120,24 @@ int main(void)
 		  second++;
 		  setTimer2(delayTimer);
 		}
-	   displayClock(hour, minute, second, timer2_counter);
+	 	 //update time for clock
+	   if(second >= 60){
+		   second = 0;
+		   minute++;
+	   }
+	   if(minute >= 60){
+		   minute = 0;
+		   hour++;
+	   }
+	   if(hour >= 24){
+		   hour = 0;
+	   }
+	   //parse time to 7SEG
+	   updateClockBuffer(hour, minute);
+	   //displaying
+	   displayClock(timer2_counter);
 	   displayLEDMatrix();
 	   matrixAnimation();
-
     /* USER CODE BEGIN 3 */
    }
   /* USER CODE END 3 */
